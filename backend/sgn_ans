@@ -1,0 +1,38 @@
+##
+    with chart
+##
+
+A 1: SELECT settlement_date, container_name FROM view_gen_settlements_component WHERE date_trunc('year', settlement_date) = '2022-01-01';
+
+A 2: import plotly.express as px
+import pandas as pd
+
+# query the database
+df = pd.read_sql_query("SELECT * FROM view_gen_settlements_component WHERE date_trunc('year', settlement_date) >= (NOW() - INTERVAL '5 years');", conn)
+
+# create the bar chart
+fig = px.bar(df, x='settlement_date', y='settlement_amount_usd', barmode='group')
+
+# update the layout
+fig.update_layout(
+    title='Settlement Amounts (USD) by Year',
+    xaxis_title='Settlement Date',
+    yaxis_title='Settlement Amount (USD)',
+    xaxis_tickangle=-45,
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='rgba(0,0,0,0)',
+    font=dict(
+        family="Arial",
+        size=14,
+        color="#7f7f7f"
+    ),
+    showlegend=False
+) 
+
+
+##
+    without chart
+##
+
+A 1.: SELECT * FROM view_gen_settlements_component WHERE settlement_date >= '2022-01-01'; 
+

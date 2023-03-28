@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="28px" viewBox="0 0 30 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="2.1" transform="translate(-323.000000, -496.000000)" stroke="#65B323" stroke-width="1.5">
+            <g id="38-–-science" transform="translate(323.000000, 495.000000)">
+                <g id="icon" transform="translate(1.000000, 2.507073)">
+                    <circle id="Oval" cx="14" cy="12.4929275" r="2"></circle>
+                    <ellipse id="Oval" cx="14" cy="12.4929275" rx="14" ry="6"></ellipse>
+                    <path d="M8.80384758,15.4929275 C4.93785433,8.79683076 4.13024426,2.02542609 7,0.368571839 C9.86975574,-1.28828241 15.3301592,2.79683076 19.1961524,9.49292749 C23.0621457,16.1890242 23.8697557,22.9604289 21,24.6172831 C18.1302443,26.2741374 12.6698408,22.1890242 8.80384758,15.4929275 Z" id="Oval-Copy-221"></path>
+                    <path d="M8.80384758,9.49292749 C12.6698408,2.79683076 18.1302443,-1.28828241 21,0.368571839 C23.8697557,2.02542609 23.0621457,8.79683076 19.1961524,15.4929275 C15.3301592,22.1890242 9.86975574,26.2741374 7,24.6172831 C4.13024426,22.9604289 4.93785433,16.1890242 8.80384758,9.49292749 Z" id="Oval-Copy-222"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
