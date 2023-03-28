@@ -107,7 +107,7 @@ function SearchBar() {
       setIsLoading(true);  
       setIsRun(true);
       // const res = await axios.post('http://51.142.115.5:5000/generate_sql_query', { prompt:query });
-      const res = await axios.post('http://127.0.0.1:50001/generate_sql_query', { prompt:query });
+      const res = await axios.post('http://192.168.1.11:50001/generate_sql_query', { prompt:query });
 
       console.log(res);
       
