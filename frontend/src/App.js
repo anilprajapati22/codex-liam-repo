@@ -85,7 +85,7 @@ function SearchBar() {
   const [isLoading_block2, setisLoading_block2] = useState(false);
   const tableRef = useRef(null);
   const [isOn, setIsOn] = useState(false);
- 
+  const [is_chart_in_res, setIsChartInRes] = useState(false);
   console.log(process.env.REACT_APP_SGNONS);
 
   const handleSearch = async (e) => {
@@ -112,6 +112,7 @@ function SearchBar() {
       {  
         setResult(res.data.query);
         setSqlResult(res.data.jsonresult);
+        setIsChartInRes(res.data.is_chart_in_ans)
       }
       else
       {
@@ -132,6 +133,7 @@ function SearchBar() {
       setShowTable(true)
     }
     setisLoading_block2(false)
+    
   };
   function handleShowQuestions()
   {
@@ -243,7 +245,8 @@ function SearchBar() {
 
   const get_chart_url =  () =>{
     // await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 ));
-    return 'http://51.142.115.5:8081/templates/chart.html';
+    console.log(process.env.REACT_APP_CHART_URL);
+    return 'http://localhost:8081/templates/chart.html';
   }
 
 
@@ -340,13 +343,16 @@ function SearchBar() {
               </div>
               <div class="col-lg-5 col-md-5 col-sm-5 col-5 align-self-end ">
                 <div class=" align-self-end  ">
-                  <div class="switch-field">
-                  <div className='field-group' field-data="Chart">
-                    <input type='checkbox' name='checkbox' id="switch" class="checkbox-field" onChange={handleToggle}></input>
-                    <label for="switch" class="checkbox-label"><span>Dataset</span></label>
-                  </div>
-                   
-                  </div>
+                 { is_chart_in_res ?                  
+                      <div class="switch-field">
+                        <div className='field-group' field-data="Chart">
+                          <input type='checkbox' name='checkbox' id="switch" class="checkbox-field" onChange={handleToggle}></input>
+                          <label for="switch" class="checkbox-label"><span>Dataset</span></label>
+                        </div>
+                      </div>
+                  :<></>
+                  
+                  }
                     {is_run & showtable?
                     sql_result.length === 1 ?
                     sql_result[0].length === 1?
@@ -413,12 +419,19 @@ function SearchBar() {
                       }
                     </div>
                   </div>
-                  <div style={{ display: isOn ? "block" : "none" }}>
-                    {/*Chart Data Show*/}
-                    <div id='chart_div' className='chart_div'>
-                      <iframe src={get_chart_url()} className='chart_iframe'></iframe>
-                    </div>
-                  </div>
+                  {
+                      isOn?
+                    <div style={{ display: "block"}}>
+                    
+                      {/*Chart Data Show*/}
+                      <div id='chart_div' className='chart_div'>
+                        <iframe src={get_chart_url()} className='chart_iframe'></iframe>
+                      </div>
+                    </div> 
+                    :
+                    <></>
+                  }  
+                 
                 </div>
             </div>
           </div> 
