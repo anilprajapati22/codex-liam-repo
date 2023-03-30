@@ -1,0 +1,11 @@
+Description=sgnons service flask
+
+[Service]
+User=root
+WorkingDirectory=/home/metamorf/codex-react/backend
+ExecStart=/home/metamorf/.local/bin/flask  run -h 0.0.0.0 -p 5001
+Restart=always
+# replace /home/user/.virtualenv/bin/python with your virtualenv and main.py with your script
+
+[Install]
+WantedBy=multi-user.target
