@@ -17,7 +17,7 @@ import plotly.express as px
 import pandas as pd
 
 # query the database
-df = pd.read_sql_query("SELECT * FROM view_gen_settlements_component WHERE date_trunc('year', settlement_date) >= (NOW() - INTERVAL '2 years');", conn)
+df = pd.read_sql_query("SELECT * FROM view_gen_settlements_component WHERE date_trunc('year', settlement_date) >= (NOW() - INTERVAL '5 years');", conn)
 
 # create the bar chart
 fig = px.bar(df, x='settlement_date', y='settlement_amount_usd', barmode='group')

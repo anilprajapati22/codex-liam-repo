@@ -85,13 +85,8 @@ function SearchBar() {
   const [isLoading_block2, setisLoading_block2] = useState(false);
   const tableRef = useRef(null);
   const [isOn, setIsOn] = useState(false);
-  function wait(ms){
-    for (var i=0;i<ms;i++){
-      console.log(i)
-    }
-  }
  
-
+  console.log(process.env.REACT_APP_SGNONS);
 
   const handleSearch = async (e) => {
     //showtwobox?console.log("donothing"):document.getElementById("home-blob").remove();
@@ -107,8 +102,8 @@ function SearchBar() {
       setIsLoading(true);  
       setIsRun(true);
       // const res = await axios.post('http://51.142.115.5:5000/generate_sql_query', { prompt:query });
-      const res = await axios.post('http://192.168.1.11:50001/generate_sql_query', { prompt:query });
-
+      // const res = await axios.post('http://127.0.0.1:50001/generate_sql_query', { prompt:query });
+      const res = await axios.post('http://'+ process.env.REACT_APP_HOST +':'+ process.env.REACT_APP_PORT +'/generate_sql_query', { prompt:query });  
       console.log(res);
       
       setResult(res.data.query);
@@ -244,6 +239,11 @@ function SearchBar() {
 
   const handleToggle = () => {
     setIsOn(!isOn);
+  }
+
+  const get_chart_url =  () =>{
+    // await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 ));
+    return 'http://51.142.115.5:8081/templates/chart.html';
   }
 
 
@@ -416,7 +416,7 @@ function SearchBar() {
                   <div style={{ display: isOn ? "block" : "none" }}>
                     {/*Chart Data Show*/}
                     <div id='chart_div' className='chart_div'>
-                      <iframe src='file.html' className='chart_iframe'></iframe>
+                      <iframe src={get_chart_url()} className='chart_iframe'></iframe>
                     </div>
                   </div>
                 </div>
