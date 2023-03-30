@@ -53,32 +53,36 @@
   </head>
   
   <body>
-    <!-- Naviagtion-Bar Start -->
-      <nav class="navbar navbar-expand-lg navbar-inverse">
-        <div class="container-fluid">
+    <!--Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-inverse">
+      <div class="container-fluid">
           <a class="navbar-brand mx-2" href="/">
+             
             <img src="metamorf_green.png" alt="" width="35" height="35">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-success"><i class="fa fa-bars" aria-hidden="true"></i></span>
           </button>
           <div class="collapse navbar-collapse mx-2" id="navbarSupportedContent">
-              <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+              <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">  
+                
               </ul> 
+             
               <a class="nav-link d-flex fw-bold" aria-current="page" href="/">
                 <img src="image.png" alt="" class="img-mob" width="35" height="35" class="mx-3  nav-img"> 
                 <span> IRIS</span>
               </a>
+              
           </div>
-         </div>
-      </nav>
-    <!-- Navigation-bar End -->
-    
-    <!--Main Page Content Show-->
+      </div>
+    </nav>
+<!--Navbar End-->
+  
     <div id="root">
 
+
+      
     </div>
-    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -89,19 +93,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    
-    <!-- Script Tag Start -->
+
+
     <script>
-      function doGet() 
-      {
-        return HtmlService.createHtmlOutputFromFile('index.html')
+      function doGet() {
+    return HtmlService.createHtmlOutputFromFile('index.html')
              .addMetaTag('viewport', 'width=device-width, initial-scale=1')
              .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-      }
+}</script>
 
-      
-    </script>
-    <!-- Script Tag End -->
 
   </body>
 
