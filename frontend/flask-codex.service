@@ -1,0 +1,12 @@
+[Unit]
+Description=sgnons service flask
+
+[Service]
+User=root
+WorkingDirectory=/home/metamorf
+ExecStart=/home/metamorf/.local/bin/flask  run -h 0.0.0.0 -p 5000
+Restart=always
+# replace /home/user/.virtualenv/bin/python with your virtualenv and main.py with your script
+
+[Install]
+WantedBy=multi-user.target
