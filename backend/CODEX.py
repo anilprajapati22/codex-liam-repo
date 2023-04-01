@@ -9,7 +9,7 @@ from chart_code_formator import get_code
 from chart_html_code_get import get_div
 import os
 import multiprocessing
-openai.api_key = "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"
+openai.api_key = "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"
 
 app = Flask(__name__)
 CORS(app)
@@ -197,11 +197,12 @@ def generate_query_endpoint():
 
     def replace_string(input_string):
         input_string = input_string.replace("Answer", "")
+        input_string = input_string.replace("\n"," ")
         return input_string.replace(":", "")
 
 
     answer1 = replace_string(answer1)
-    answer1 = answer1.replace("\n"," ")
+    # answer1 = answer1.replace("\n"," ")
     print("\n\nreplaced new line char\n",str(answer1))
     answer1 = answer1.strip()
     # Create a cursor object

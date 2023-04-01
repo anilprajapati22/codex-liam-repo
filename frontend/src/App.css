@@ -163,14 +163,19 @@ iframe
   width: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
- 
+}
+
+.chart-open-btn{
+  background-color: #65B323;
+  border-radius: 5px;
+  margin-right: 1.70%;
 }
 
 .chart_iframe{
   margin-bottom: -31%;
   transform-origin: 0px 0px 0px;
   transform: scale(0.6);
-  width: 210%;
+  width: 164%;
   height: 37em;
   overflow-y: hidden;
   display: block;
@@ -180,6 +185,9 @@ iframe
   animation-fill-mode: forwards;
   animation-duration: 1.1s;
   animation-delay: 0.2s;
+  background-color: #ffffff;
+  border-radius: 5px;
+  
 }
 /* -- Iframe End -- */
 
@@ -566,7 +574,7 @@ body
   border-radius: 6px;
   height: 33px;
     margin-top: -11%;
-    margin-right: 7%;
+    margin-right: 4%;
 }
 .bg-success{
   background-color: rgb(97 172 34)!important;
