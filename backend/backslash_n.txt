@@ -1,0 +1,98 @@
+
+
+
+
+last 5 years top 5 arbitration by revenue and barchart
+
+
+ line 66 
+A1: SELECT arbitration_id, container_name, matter_number, total_revenue_matter\nFROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10;
+
+A2: import plotly.express as px
+import pandas as pd
+
+# query the database
+df = pd.read_sql_query("SELECT container_name, total_revenue_matter FROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10;", conn)
+
+# create the bar chart
+fig = px.bar(df, x='container_name', y='total_revenue_matter', color='container_name')
+
+# update the layout
+fig.update_layout(
+    title='Top 10 containers by total revenue matter',
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='rgba(0,0,0,0)',
+    font=dict(
+        family="Arial",
+        size=14,
+        color="#7f7f7f"
+    ),
+    showlegend=False
+)
+
+# show the chart
+fig.show() 
+
+
+
+
+
+
+
+ans1 A1: : 
+ SELECT arbitration_id, container_name, matter_number, total_revenue_matter\nFROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10;
+ans2 A1: : 
+ import plotly.express as px
+import pandas as pd
+
+# query the database
+df = pd.read_sql_query("SELECT container_name, total_revenue_matter FROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10;", conn)
+
+# create the bar chart
+fig = px.bar(df, x='container_name', y='total_revenue_matter', color='container_name')
+
+# update the layout
+fig.update_layout(
+    title='Top 10 containers by total revenue matter',
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='rgba(0,0,0,0)',
+    font=dict(
+        family="Arial",
+        size=14,
+        color="#7f7f7f"
+    ),
+    showlegend=False
+)
+
+# show the chart
+fig.show()
+write inside the chart file
+
+
+
+
+inside the chart code formator
+
+
+
+
+
+replaced new line char
+ SELECT arbitration_id, container_name, matter_number, total_revenue_matter\nFROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10
+
+
+
+
+query line 123: select json_agg(to_json(d)) from (SELECT arbitration_id, container_name, matter_number, total_revenue_matter\nFROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 10) as d
+sgnons erorr :  syntax error at or near "\"
+LINE 1: ...ontainer_name, matter_number, total_revenue_matter\nFROM vie...
+                                                             ^
+
+127.0.0.1 - - [01/Apr/2023 18:59:26] "POST /generate_sql_query HTTP/1.1" 200 -
+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
+**********************
+
+
+
+ running chart
+Chart file created

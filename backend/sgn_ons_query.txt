@@ -1,0 +1,1 @@
+SELECT arbitration_id, container_name, matter_number, total_revenue_matter\nFROM view_gen_end_of_matter_assessment_component WHERE total_revenue_matter IS NOT NULL ORDER BY total_revenue_matter DESC LIMIT 5

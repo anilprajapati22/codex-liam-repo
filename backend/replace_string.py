@@ -1,0 +1,15 @@
+def replace_string(input_string):
+    # print("input string 1:",input_string)
+    input_string = input_string.replace(";","")
+    # print("input string 2:",input_string)
+    input_string = input_string.replace("Answer", "")
+    # print("input string 3:",input_string)
+    print(input_string.find('\\n'))
+                  
+    print("\n********************* input string")
+    print(input_string)
+    input_string = input_string.replace("\\n"," ")
+    print(input_string.find('\\n'))
+    # cur1.execute("""select json_agg(to_json(d)) from ("""+ input_string + """) as d""")
+    print("input string 4:",input_string)
+    return input_string.replace(":", "")

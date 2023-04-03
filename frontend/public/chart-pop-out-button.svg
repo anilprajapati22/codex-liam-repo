@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>57 – controls</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Alt-text" transform="translate(-1055.000000, -457.000000)">
+            <g id="57-–-controls" transform="translate(1055.000000, 457.000000)">
+                <rect id="body" x="0" y="0" width="20" height="20"></rect>
+                <g id="icon" transform="translate(1.818182, 1.818182)" stroke="#65B323" stroke-linecap="round" stroke-width="1.5">
+                    <rect id="Rectangle" x="0" y="5.31468531" width="11.958042" height="11.958042" rx="3"></rect>
+                    <polyline id="Path-1087" points="13.2867133 0 17.2727273 -1.4751215e-16 17.2727273 3.98601399"></polyline>
+                    <line x1="17.2727273" y1="-1.4751215e-16" x2="13.2867133" y2="3.98601399" id="Path-1088"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

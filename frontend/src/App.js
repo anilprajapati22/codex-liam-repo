@@ -247,7 +247,7 @@ function SearchBar() {
   const get_chart_url =  () =>{
     // await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 ));
     console.log(process.env.REACT_APP_CHART_URL);
-
+    return 'http://51.142.115.5:8082/templates/chart.html'
     return 'http://localhost:8081/templates/chart.html';
   }
 
@@ -325,7 +325,7 @@ function SearchBar() {
                     }
                   </button>
                   {/* -- Toggle Button (Show/Hide) -- */}
-                  <button className="btn  btn-sm text-success fw-normal fs-6 ms-2 float-end ani" onClick={showCodeInCard}>{ showcode & result.length >0 ? isLoading? <></> :<>Hide</>: isLoading? <></> : <>Show</>}</button>
+                  <button className="btn  btn-sm text-success fw-normal fs-6 ms-2 float-end ani" onClick={showCodeInCard}>{ showcode & result.length >0 ? isLoading? <></> :<>Hide</>: isLoading? <></> : <>Show Code</>}</button>
               </div>
               {showcode & result.length >0 ? isLoading? <></> :  
              <div className="col-lg-12 col-md-12 col-sm-12 col-12 mt-0 results"><pre>{result}</pre></div>:<></>}
@@ -335,27 +335,19 @@ function SearchBar() {
       </div>
     {/* -- Second Page Code Card (2) -- */}
       <div class="container col-lg-12 col-md-12 col-sm-12 col-12 d-flex justify-content-center align-items-center mt-4">
-        <div class="card">
+        <div class="card mb-5">
           <div class="card-body ">
             <div class="row">
               {/*Iris heading Column*/}      
-              <div class="col-lg7 col-md-7 col-sm-7 col-7 align-self-start">
+              <div class="col-lg-7 col-md-7 col-sm-7 col-6 align-self-start">
                 <object data="nebulus.svg" width="22" height="22"></object>
                 <button class="btn btn fw-bold fw-normal fs-6 mb-3 ms-1">{is_run?<> Iris</>:<>Error</>}  </button>      
               </div>
-              <div class="col-lg-5 col-md-5 col-sm-5 col-5 align-self-end ">
-                <div class=" align-self-end  ">
-                 { is_chart_in_res ?                  
-                      <div class="switch-field">
-                        <div className='field-group' field-data="Chart">
-                          <input type='checkbox' name='checkbox' id="switch" class="checkbox-field" onChange={handleToggle}></input>
-                          <label for="switch" class="checkbox-label"><span>Dataset</span></label>
-                        </div>
-                      </div>
-                  :<></>
-                  
-                  }
-                    {is_run & showtable?
+              <div class="col-lg-5 col-md-5 col-sm-5 col-6  ">
+                <div class=" row ">
+                <div className='row'>
+                  <div className='col mar-top mt-5'>
+                    {is_run & showtable ?
                     sql_result.length === 1 ?
                     sql_result[0].length === 1?
                     sql_result[0][0].length > 0?
@@ -363,20 +355,32 @@ function SearchBar() {
                     {console.log("error before  csvlink")}
                     <CSVLink data={sql_result[0][0]}>
                     {/*Download Button*/}
-                    <button class="btn  btn-sm fw-bold bg-success fw-normal fs-6 ms-0 float-end iris-card-button" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 16">
+                    <button className={
+                      is_chart_in_res ?
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
+                      :
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
+                    }
+                    
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
                         <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
                         <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
                       </svg>
                     </button>   
                     </CSVLink>
                     </>
+                    :<>1</>
                     :<></>
-                    :<></>
-                    :<></>
+                    :<>3</>
                     :
-                    <button class="btn  btn-sm fw-bold fw-normal bg-success fs-6 float-end iris-card-button" >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 16">
+                    <button className={
+                      is_chart_in_res ?
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
+                      :
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
+                    }>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
                         <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
                         <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
                       </svg>
@@ -384,13 +388,34 @@ function SearchBar() {
                     }
                         
                   {/*Send mail*/}
-                  <button class="btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button float-end">
+                  <button className={
+                    is_chart_in_res?
+                    "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button "
+                    :
+                    "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button  btn-when-chart-show"
+                  }>
                     <a href={"mailto:person@company.com?subject="+{query}+"&body="+{result} }>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send text-white " viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send text-white " viewBox="0 0 16 20">
                           <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                         </svg>
                     </a>    
                   </button>
+
+                  { is_chart_in_res ?                  
+                      <div class="switch-field float-end">
+                        <div className='field-group ' field-data="Chart">
+                          <input type='checkbox' name='checkbox' id="switch" class="checkbox-field" onChange={handleToggle}></input>
+                          <label for="switch" class="checkbox-label"><span>Dataset</span></label>
+                        </div>
+                      </div>
+                  :<></>
+                  
+                  }
+                </div>
+                
+
+
+                    </div>
                   </div>
                   </div>
                 <div>
@@ -424,15 +449,16 @@ function SearchBar() {
                   {
                       isOn ?
                     <div style={{ display: "block"}} className="outer-chaert-div">
-                  <button class="btn  btn-sm fw-bold float-end mt-5 chart-open-btn">
-                    <a href={get_chart_url()} target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-arrow-up-right-circle text-white " viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.854 10.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
-                    </svg>
-                    </a>    
-                  </button>
                       {/*Chart Data Show*/}
                       <div id='chart_div' className='chart_div'>
+                      <a href={get_chart_url()} target="_blank" className='chart_btn'>
+                        <button class="btn  btn-sm fw-bold float-end mt-3 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right text-success" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+</svg>
+                        </button> 
+                        </a> 
                         <iframe src={get_chart_url()} className='chart_iframe' id='theframe'></iframe>
                       </div>
                       <script>
@@ -461,7 +487,7 @@ function SearchBar() {
             {/* -- Things Heading -- */}
             <div class="col-lg-8 col-md-9 col-sm-10 col-10 d-flex ms-5 mb-2 thing-mob">
                 <object data="nebulus.svg" width="28" height="25"></object>
-                <span class="ms-3 what-txt mb-2">Things you can ask me</span>
+                <span class="ms-3 what-txt mb-2">1111Things you can ask me</span>
               </div>
               <hr/>
               <div class="col-lg-8 col-md-9 col-sm-12 col-12 mt-1 ">
