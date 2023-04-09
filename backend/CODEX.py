@@ -23,20 +23,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-# db connection 
-
-try:
-    conn = psycopg2.connect(
-        host='localhost',
-        user='postgres',
-        password='postgres',
-        database='postgres',
-        port="5440"
-    )
-except Exception as e:
-    print("\n******************************\n line 66","sgnons erorr 92 : ",str(e),"\n*****************************\n")    
-
-
 
 @app.route('/chart')
 def chart():
@@ -92,15 +78,15 @@ def generate_query_endpoint():
         
         if cache_ans:
             
-            if cache_ans.get('final_response'):
-                print("**********************")
-                print("\n\n\n running chart")
-                print("sgnons comming from cache full")
-                return cache_ans.get('final_response')
+            # if cache_ans.get('final_response'):
+            #     print("**********************")
+            #     print("\n\n\n running chart")
+            #     print("sgnons comming from cache full")
+            #     # return cache_ans.get('final_response')
             print("**********************")
             print("sgnons comming from cache only response")
             response = cache_ans.get('response')
-            # return cache_ans
+            # return cache_ans.get('final_ans')
         else:
             response = openai.Completion.create(
                         model="text-davinci-003",
@@ -242,6 +228,16 @@ def generate_query_endpoint():
         thread = multiprocessing.Process(target=run_chart, args=())
         thread.start()
 
+    try:
+        conn = psycopg2.connect(
+            host=os.getenv('PYTHON_DB_HOST'),
+            user='postgres',
+            password='postgres',
+            database='postgres',
+            port=os.getenv('PYTHON_DB_PORT')
+        )
+    except Exception as e:
+        print("\n******************************\n line 66","sgnons erorr 92 : ",str(e),"\n*****************************\n")    
 
     # get_cache()
     answer1 = replace_string(answer1)

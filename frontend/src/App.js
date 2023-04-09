@@ -95,8 +95,8 @@ function SearchBar() {
     e.preventDefault();
     setIsLoading(true);
     setIsChartInRes(false);
-    
-    
+    setIsChartInRes(false);
+    setIsOn(false);
     setShowTable(false);
     setError(null);
     try {
@@ -247,6 +247,7 @@ function SearchBar() {
   const get_chart_url =  () =>{
     // await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 ));
     console.log(process.env.REACT_APP_CHART_URL);
+    return process.env.REACT_APP_CHART_URL;
     return 'http://51.142.115.5:8082/templates/chart.html'
     return 'http://localhost:8081/templates/chart.html';
   }
@@ -487,7 +488,7 @@ function SearchBar() {
             {/* -- Things Heading -- */}
             <div class="col-lg-8 col-md-9 col-sm-10 col-10 d-flex ms-5 mb-2 thing-mob">
                 <object data="nebulus.svg" width="28" height="25"></object>
-                <span class="ms-3 what-txt mb-2">1111Things you can ask me</span>
+                <span class="ms-3 what-txt mb-2">Things you can ask me</span>
               </div>
               <hr/>
               <div class="col-lg-8 col-md-9 col-sm-12 col-12 mt-1 ">

@@ -1,4 +1,4 @@
-
+import os
 
 def get_code(code):
     print("\n\n\n\n"+str("inside the chart code formator")+"\n\n\n")
@@ -9,7 +9,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 conn = psycopg2.connect(
-            host='localhost',
+            host='""" +  os.getenv('PYTHON_DB_HOST') + """',
             user='postgres',
             password='postgres',
             database='postgres',
