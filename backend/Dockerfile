@@ -15,8 +15,8 @@ CMD ["flask","--app","CODEX","run","-h","0.0.0.0","-p","50001"]
 
 # docker build -t flask-codex-chart-backend .
 
-# docker run -p 8081:80 -v /Users/presidio/sgn/metamorf/codex-code/chart-html:/usr/share/nginx/html -d --name chart-html nginx:alpine
+# docker run -p 8081:80 -v /Users/p/sgn/metamorf/codex-code/chart-html:/usr/share/nginx/html -d --name chart-html nginx:alpine
 
-# docker run --env-file ../frontend/.env -p 50001:50001 -d -v /Users/presidio/sgn/metamorf/codex-code/chart-html:/templates  --name flask-codex-chart-backend flask-codex-chart-backend
+# docker run --env-file ../frontend/.env -p 50001:50001 -d -v /Users/p/sgn/metamorf/codex-code/chart-html:/templates  --name flask-codex-chart-backend flask-codex-chart-backend
 
 # docker rm -f flask-codex-chart-backend
