@@ -13,7 +13,7 @@ conn = psycopg2.connect(
             user='postgres',
             password='postgres',
             database='postgres',
-            port="5440"
+            port="5441"
         )    
 print("Chart file created")
     """+ "\n"+ code.replace("fig.show()","") + """\nfig.write_html('templates/chart.html')"""

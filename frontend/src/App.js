@@ -248,8 +248,8 @@ function SearchBar() {
     // await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 ));
     console.log(process.env.REACT_APP_CHART_URL);
     return process.env.REACT_APP_CHART_URL;
-    return 'http://51.142.115.5:8082/templates/chart.html'
-    return 'http://localhost:8081/templates/chart.html';
+    // return 'http://51.142.115.5:8082/templates/chart.html'
+    // return 'http://localhost:8081/chart.html';
   }
 
 
