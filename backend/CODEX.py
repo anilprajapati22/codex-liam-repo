@@ -13,10 +13,10 @@ from dotenv import load_dotenv
 import pickle
 from replace_string import replace_string
 
-load_dotenv(dotenv_path="../frontend/.env")
+load_dotenv(dotenv_path=".env")
 
 print(os.getenv('PYTHON_OPEN_AI_KEY'))
-openai.api_key = os.getenv('PYTHON_OPEN_AI_KEY')
+openai.api_key = 'user your openai id here'
 
 
 app = Flask(__name__)

@@ -4,9 +4,9 @@ COPY new_req.txt new_req.txt
 RUN pip3 install -r new_req.txt
 WORKDIR flask-app
 COPY . .
-EXPOSE 50001
+EXPOSE 8083
 VOLUME /templates
-CMD ["flask","--app","CODEX","run","-h","0.0.0.0","-p","50001"]
+CMD ["flask","--app","CODEX","run","-h","0.0.0.0","-p","8083"]
 
 # need to run nginx image on server to show chart and mount templates folder
 # here also mount templates folder with local directory and mount same with ngix server to show chart
