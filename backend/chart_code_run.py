@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 conn = psycopg2.connect(
-            host='192.168.1.3',
+            host='51.142.115.5',
             user='postgres',
             password='postgres',
             database='postgres',
@@ -17,14 +17,14 @@ import plotly.express as px
 import pandas as pd
 
 # query the database
-df = pd.read_sql_query("SELECT arbitration_id, container_name, matter_number, experts_id, type_of_hearing, start_date, end_date, hsf_internal_advocates, external_advocates, hearing_format, virtual_hearing, bundle_used, hsf_involved_bundle, bundle_type, hearing_services_used, experts_who_gave_evidence_at_hearing, created_by, updated_by FROM view_hearings_component WHERE start_date >= (NOW() - INTERVAL '5 years');", conn)
+df = pd.read_sql_query("SELECT settlement_amount_usd FROM view_settlements_component;", conn)
 
 # create the bar chart
-fig = px.bar(df, x='container_name', y='start_date', color='container_name')
+fig = px.bar(df, x='settlement_amount_usd', y='count', color='settlement_amount_usd')
 
 # update the layout
 fig.update_layout(
-    title='Hearings in the past 5 years',
+    title='Average Settlement Amount (USD)',
     plot_bgcolor='rgba(0,0,0,0)',
     paper_bgcolor='rgba(0,0,0,0)',
     font=dict(

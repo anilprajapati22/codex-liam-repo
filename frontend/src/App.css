@@ -319,10 +319,16 @@ hr
   padding: 2%;
   padding-bottom: 0%;
 }
+.container_name_calss{
+  min-width: 245px;
+  max-width: 270px;
+}
+
 table
 { 
 direction: ltr;
 }
+
 .tables 
 {width: 100%;
   overflow-x: auto;

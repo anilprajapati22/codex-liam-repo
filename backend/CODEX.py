@@ -12,11 +12,11 @@ import multiprocessing
 from dotenv import load_dotenv
 import pickle
 from replace_string import replace_string
-
+import re
 load_dotenv(dotenv_path=".env")
 
 print(os.getenv('PYTHON_OPEN_AI_KEY'))
-openai.api_key = os.getenv('PYTHON_OPEN_AI_KEY')
+openai.api_key = ""
 
 
 app = Flask(__name__)
@@ -27,6 +27,14 @@ CORS(app)
 @app.route('/chart')
 def chart():
    return render_template('chart.html', chart_div = get_div())    
+
+def extract_sql_queries(text):
+    sql_queries = []
+    regex = r"(?i)select\s.*?\sfrom\s.*?;"
+    matches = re.findall(regex, text)
+    for match in matches:
+        sql_queries.append(match.strip())
+    return sql_queries
 
 def run_chart():
     print("**********************")
@@ -210,7 +218,26 @@ def generate_query_endpoint():
             answer1 = query[index1:].replace("a 1.:", "").strip()
             print("else ans3 : \n",answer1)
             is_chart_in_ans = False
- 
+    elif "A no.1" in query:
+        index1 = query.index("A no.1:")
+        answer1 = query[index1:].replace("A no.1:", "").strip()
+        print("else ans3 : \n",answer1)
+        is_chart_in_ans = False
+    else:
+        # now if we are not finding anything form here we can add this regex thing
+        regex_queries = extract_sql_queries(query)
+        if regex_queries:
+            print("finding query from the regex")
+            answer1 = regex_queries[0]
+            is_chart_in_ans = False
+            print("Nothing\n\n")
+            print(query)
+        else:
+            print("Nothing\n\n")
+            print(query)            
+
+
+
     if is_chart_in_ans and 'plotly.express' in answer2 and '# create the bar chart' in answer2:
         is_chart_in_ans = True
     else:
@@ -270,7 +297,7 @@ def generate_query_endpoint():
 
     json_ans = cur1.fetchall()
     # #print("\njsonans : \n",json_ans)
-    if (json_ans[0][0][0]):
+    if json_ans is not None and json_ans[0] is not None and json_ans[0][0] is not None:
         print(json_ans[0][0][0])
     else:    
         #print("sgnons null value")

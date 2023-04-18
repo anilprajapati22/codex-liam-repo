@@ -128,7 +128,7 @@ function SearchBar() {
     }
     setIsLoading(false)
     setisLoading_block2(true);
-    await new Promise(resolve => setTimeout(resolve, 1500 + Math.floor(Math.random() * 3)*1000 )); // 3 sec
+    await new Promise(resolve => setTimeout(resolve, 700 + Math.floor(Math.random() * 3)*100 )); // 3 sec
     if (is_run)
     {
       setShowTable(true)
@@ -164,7 +164,14 @@ function SearchBar() {
      // get table heading data
      const ThData =()=>{
       return column.map((dataR)=>{
-      return <th scope="col" key={dataR}>{dataR}</th>
+      return (<th scope="col" key={dataR}  className={ dataR === 'container_name'? "container_name_calss" : ""}>
+                {dataR === 'container_name'?
+                  // if container_name then print column name as matter_name
+                  'matter_name'
+                  : 
+                  dataR
+                }
+                </th>)
       })
      }
     
@@ -176,11 +183,49 @@ function SearchBar() {
           {
             column.map((v)=>{
             return <td>{
-            typeof dataR[v] === 'number'?
-            dataR[v].toLocaleString("en-US")                    
-            :
-            typeof dataR[v] === 'string'? dataR[v].length>10 & dataR[v].length<30?dataR[v].slice(0, 28)+"...":dataR[v].slice(0, 10)+"...":
-            dataR[v]+""
+            v === 'container_name'?
+              // if container name then print as it is
+              dataR[v]
+              :
+              typeof dataR[v] === 'number'?
+                // check if number then print as it is (true)
+                Number.isInteger(dataR[v])?
+                // true for integer
+                  dataR[v].toLocaleString("en-US")
+                  : 
+                  dataR[v].toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits:2})                    
+                  :
+                  // not a number then check first if it's valid date format or not
+                  isNaN(Date.parse(dataR[v]))?
+                    // if not a number means it's not a date then true means string and flase means date
+                    typeof dataR[v] === 'string'? 
+                      dataR[v].length>20 & dataR[v].length < 30 & dataR[v].includes("@metamorf.ai")?
+                        // yes email
+                        dataR[v]
+                        :
+                        // no email or other string
+                        dataR[v].includes("|") & dataR[v].indexOf("|") < 50 ?
+                          // string with | 
+                          dataR[v].slice(0,dataR[v].indexOf("|"))
+                          :
+                          dataR[v].includes(",") & dataR[v].indexOf(",") < 50 ?
+                            // comma in string
+                            dataR[v].slice(0,dataR[v].indexOf(","))
+                            :
+                            dataR[v].includes(";") & dataR[v].indexOf(";") < 50 ?
+                              // semicolon in string
+                              dataR[v].slice(0,dataR[v].indexOf(";"))
+                              :
+                              dataR[v].includes(" ") & dataR[v].lastIndexOf(" ") < 50 ?
+                                // string till last sapce data
+                                dataR[v].slice(0,dataR[v].lastIndexOf(" "))
+                                :
+                                dataR[v].slice(0, 10)+"..."
+                      :
+                      dataR[v]+""
+                    :
+                    // falase means it's date 
+                    dataR[v]
           }
           </td>
           })}
@@ -348,61 +393,70 @@ function SearchBar() {
                 <div class=" row ">
                 <div className='row'>
                   <div className='col mar-top mt-5'>
-                    {is_run & showtable ?
-                    sql_result.length === 1 ?
-                    sql_result[0].length === 1?
-                    sql_result[0][0].length > 0?
-                    <>
-                    {console.log("error before  csvlink")}
-                    <CSVLink data={sql_result[0][0]}>
-                    {/*Download Button*/}
-                    <button className={
-                      is_chart_in_res ?
-                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
-                      :
-                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
-                    }
                     
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
-                        <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
-                        <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                      </svg>
-                    </button>   
-                    </CSVLink>
-                    </>
-                    :<>1</>
-                    :<></>
-                    :<>3</>
-                    :
-                    <button className={
-                      is_chart_in_res ?
-                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
+                    {
+                    is_run & showtable & !isLoading?
+                      is_run & showtable ?
+                      sql_result.length === 1 ?
+                      sql_result[0].length === 1?
+                      sql_result[0][0].length > 0?
+                      <>
+                      {console.log("error before  csvlink")}
+                      <CSVLink data={sql_result[0][0]}>
+                      {/*Download Button*/}
+                      <button className={
+                        is_chart_in_res ?
+                        "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
+                        :
+                        "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
+                      }
+                      
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
+                          <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                          <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                        </svg>
+                      </button>   
+                      </CSVLink>
+                      </>
+                      :<>1</>
+                      :<></>
+                      :<>3</>
                       :
-                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
-                    }>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
-                        <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
-                        <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
-                      </svg>
-                    </button>   
+                      <button className={
+                        is_chart_in_res ?
+                        "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button"
+                        :
+                        "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button btn-when-chart-show"
+                      }>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-cloud-download text-white mx-0" viewBox="0 0 16 20">
+                          <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                          <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                        </svg>
+                      </button>   
+                      :
+                      <></>
                     }
                         
                   {/*Send mail*/}
-                  <button className={
-                    is_chart_in_res?
-                    "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button "
+                  {
+                  is_run & showtable & !isLoading?
+                    <button className={
+                      is_chart_in_res?
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button "
+                      :
+                      "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button  btn-when-chart-show"
+                    }>
+                      <a href={"mailto:person@company.com?subject="+{query}+"&body="+{result} }>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send text-white " viewBox="0 0 16 20">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                          </svg>
+                      </a>    
+                    </button>
                     :
-                    "btn  btn-sm fw-bold fw-normal bg-success fs-6  iris-card-button  btn-when-chart-show"
-                  }>
-                    <a href={"mailto:person@company.com?subject="+{query}+"&body="+{result} }>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-send text-white " viewBox="0 0 16 20">
-                          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
-                        </svg>
-                    </a>    
-                  </button>
-
-                  { is_chart_in_res ?                  
+                    <></>
+                  }  
+                  { is_run & showtable & !isLoading & is_chart_in_res ?                  
                       <div class="switch-field float-end">
                         <div className='field-group ' field-data="Chart">
                           <input type='checkbox' name='checkbox' id="switch" class="checkbox-field" onChange={handleToggle}></input>
